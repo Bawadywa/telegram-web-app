@@ -51,6 +51,124 @@
       border-color: var(--button);
     }
 
+    /* ===============================
+   BASE DATE INPUT STYLE
+   =============================== */
+
+    input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+
+      background-color: var(--field_bg);
+      color: var(--text);
+
+      border: 1px solid var(--field_border);
+      border-radius: var(--radius);
+
+      outline: none;
+      box-sizing: border-box;
+
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+
+    /* ===============================
+      PLACEHOLDER-LIKE COLOR
+      =============================== */
+
+    /* When no date selected */
+    input[type="date"]:not(:valid) {
+      color: var(--hint);
+    }
+
+    /* When date selected */
+    input[type="date"]:valid {
+      color: var(--text);
+    }
+
+
+    /* ===============================
+      FOCUS STATE
+      =============================== */
+
+    input[type="date"]:focus {
+      border-color: var(--button);
+      box-shadow: 0 0 0 4px var(--field_focus);
+    }
+
+
+    /* ===============================
+      CALENDAR ICON (DESKTOP ONLY)
+      =============================== */
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      opacity: 0.7;
+      cursor: pointer;
+      filter: invert(0);
+    }
+
+    /* Dark theme icon fix */
+    [data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+
+
+    /* ===============================
+      REMOVE SPINNERS (DESKTOP)
+      =============================== */
+
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-clear-button {
+      display: none;
+    }
+
+
+    /* ===============================
+      DISABLED STATE
+      =============================== */
+
+    input[type="date"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+
+    /* ===============================
+      SAFER MOBILE TWEAKS
+      =============================== */
+
+    /* Prevent zoom on iOS */
+    @supports (-webkit-touch-callout: none) {
+      input[type="date"] {
+        font-size: 16px;
+      }
+    }
+
+    .date-field { position: relative; }
+
+    /* .date-field input[type="date"] { padding-left: 44px; } */
+
+    /* Show overlay only when value is empty */
+    .date-field input[type="date"][value=""] + .date-placeholder {
+    display: flex;
+    }
+
+    .date-placeholder {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: var(--hint);
+    font-size: 15px;
+    align-items: center;
+    gap: 6px;
+    display: none; /* default hidden */
+    }
+
+
     button {
       width: 100%;
       padding: 12px;
@@ -83,7 +201,12 @@
   <input id="phone" placeholder="+380..." />
 
   <label>Date</label>
-  <input id="date" type="date" />
+  <div class="date-field">
+  <input id="date" type="date" required />
+  <span class="date-placeholder">
+    📅 Select date
+  </span>
+  </div>
 
   <label>Category</label>
   <select id="category">
