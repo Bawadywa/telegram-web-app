@@ -146,6 +146,35 @@
       }
     }
 
+    .date-field { position: relative; }
+
+    /* .date-field input[type="date"] { padding-left: 44px; } */
+
+    /* Placeholder overlay */
+    .date-placeholder{
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--hint);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Hide overlay when there IS a value */
+    .date-field.has-value .date-placeholder {
+      display: none;
+    }
+
+    /* OPTIONAL: hide overlay on desktop if you prefer native dd/mm/yyyy hint */
+    @media (min-width: 768px){
+      /* comment this block out if you want overlay on desktop too */
+      .date-placeholder { display: none !important; }
+    }
+
 
     button {
       width: 100%;
@@ -179,7 +208,11 @@
   <input id="phone" placeholder="+380..." />
 
   <label>Date</label>
-  <input id="date" type="date" required placeholder="📅 Select date"/>
+  <div class="date-field" id="dateWrap">
+  <input id="date" type="date" />
+  <span class="date-placeholder">📅 Select date</span>
+  </div>
+
 
   <label>Category</label>
   <select id="category">
@@ -252,5 +285,20 @@
       tg.close();
     };
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("date");
+    const wrap  = document.getElementById("dateWrap");
+    if (!input || !wrap) return;
+
+    const sync = () => {
+      wrap.classList.toggle("has-value", !!input.value);
+    };
+
+    sync();
+    input.addEventListener("change", sync);
+    input.addEventListener("input", sync);
+  });
+</script>
 </body>
 </html>
